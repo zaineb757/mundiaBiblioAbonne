@@ -29,12 +29,12 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: Medilab - v4.7.1
-  * Template URL: https://bootstrapmade.com/medilab-free-medical-bootstrap-theme/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </head>
 
 <body>
@@ -66,7 +66,7 @@
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-          <li><a class="nav-link scrollto" href="#about">About</a></li>
+          <li><a class="nav-link scrollto" href="#livres">Livres</a></li>
           <li><a class="nav-link scrollto" href="#services">Services</a></li>
           <li><a class="nav-link scrollto" href="#departments">Departments</a></li>
           <li><a class="nav-link scrollto" href="#doctors">Doctors</a></li>
@@ -153,46 +153,77 @@
             </div><!-- End .content-->
           </div>
         </div>
-
       </div>
     </section><!-- End Why Us Section -->
 
-    <!-- ======= About Section ======= -->
-    <section id="about" class="about">
-      <div class="container-fluid">
-
+    <!-- ======= Section Livres======= -->
+    <section id="livres" class="ftco-section">
+		  <div class="container">
+			  <div class="row justify-content-center">
+				  <div class="col-md-6 text-center mb-5">
+					  <h2 class="heading-section">Livres</h2>
+				  </div>
+			  </div>
         <div class="row">
-          <div class="col-xl-5 col-lg-6 video-box d-flex justify-content-center align-items-stretch position-relative">
-            <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="glightbox play-btn mb-4"></a>
-          </div>
+          <div class="col-md-12">
+            <div class="table-wrap">
 
-          <div class="col-xl-7 col-lg-6 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-5 px-lg-5">
-            <h3>Enim quis est voluptatibus aliquid consequatur fugiat</h3>
-            <p>Esse voluptas cumque vel exercitationem. Reiciendis est hic accusamus. Non ipsam et sed minima temporibus laudantium. Soluta voluptate sed facere corporis dolores excepturi. Libero laboriosam sint et id nulla tenetur. Suscipit aut voluptate.</p>
+            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search.." class="form-control">
+              <?php
 
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-fingerprint"></i></div>
-              <h4 class="title"><a href="">Lorem Ipsum</a></h4>
-              <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
-            </div>
+                // Include config file
+                require_once "config_anas.php"; 
 
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-gift"></i></div>
-              <h4 class="title"><a href="">Nemo Enim</a></h4>
-              <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque</p>
-            </div>
+                // Attempt select query execution
+                $sql = "SELECT * FROM livre";
 
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-atom"></i></div>
-              <h4 class="title"><a href="">Dine Pad</a></h4>
-              <p class="description">Explicabo est voluptatum asperiores consequatur magnam. Et veritatis odit. Sunt aut deserunt minus aut eligendi omnis</p>
-            </div>
+                if ($result = $link->query($sql)) {						
+                  if($result){
+                    echo "<table id='dtBasicExample' class='table table-striped table-bordered table-sm' cellspacing='0' width='100%'>";
+                      echo "<thead>";
+                        echo "<tr>";
+                          echo "<th>ID</th>";
+                          echo "<th>TITRE</th>";
+                          echo "<th>CODE CATALOGUE</th>";
+                          echo "<th>CODE RAYON</th>";
+                          echo "<th>STATUS</th>";
+                        echo "</tr>";
+                      echo "</thead>";
+                      echo "<tbody>";
+                        foreach ($link->query($sql) as $row) {
+                          echo "<tr>";
+                            echo "<td scope='row'>" . $row['ID_LIVRE'] . "</td>";
+                            echo "<td>" . $row['TITRE_LIVRE'] . "</td>";
+                            echo "<td>" . $row['CODE_CATALOGUE'] . "</td>";
+                            echo "<td>" . $row['CODE_RAYON'] . "</td>";
+                            if($row['DISPONIBLE']==1)
+                              echo "<td><a href='#' title='Update Record' data-toggle='tooltip'><span class='btn btn-success'>Disponible</span></a></td>";
+                              //echo "<td><a href='modifier.php?id=". $row['ID_LIVRE'] ."' title='Update Record' data-toggle='tooltip'><span class='btn btn-success'>Disponible</span></a></td>";
+                              //echo "<td><a onclick='openForm({$row['ID_LIVRE']})' title='Update Record' data-toggle='tooltip'><span class='btn btn-success'>Disponible</span></a></td>";
+                            else
+                              echo "<td><button class='btn btn-danger'>Prêté</button></td>";
+                          echo "</tr>";  
 
-          </div>
+                        }
+                      echo "</tbody>";                            
+                    echo "</table>";
+
+                    // Free result set
+                    $result->closeCursor();
+
+                  } else{
+                      echo "<p class='lead'><em>No records were found.</em></p>";
+                    }
+                } else{
+                    echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                  }
+
+              ?>
+            </div>					
+			    </div>
         </div>
-
-      </div>
-    </section><!-- End About Section -->
+		  </div>
+	  </section><!-- End Livre Section -->
 
     <!-- ======= Counts Section ======= -->
     <section id="counts" class="counts">
@@ -940,8 +971,12 @@
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
 
-  <!-- Template Main JS File -->
+  <!-- Template JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/popper.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
+  <script src="assets/js/filtre_tableau.js"></script>
 
 </body>
 
