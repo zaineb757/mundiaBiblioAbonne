@@ -26,9 +26,12 @@ create table pret(
 	id_pret Number(10) DEFAULT pret_seq.nextval NOT NULL,
 	nom VARCHAR(20) NOT NULL,
 	phone Number(10) NOT NULL,
-	debut DATE NOT NULL,
-	fin DATE NOT NULL,
-	email VARCHAR(50) NOT NULL
+	debut DATE,
+	fin DATE,
+	email VARCHAR(50) NOT NULL,
+	action VARCHAR(10) NOT NULL,
+	id_livre Number(10),
+	FOREIGN KEY(id_livre) REFERENCES livre(id_livre)
 );
 
 ALTER TABLE pret ADD (
