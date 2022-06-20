@@ -3,8 +3,8 @@
 require_once "../config_anas.php";
  
 // Define variables and initialize with empty values
-$nom = $phone = $debut = $fin = $email = "";
-$nom_err = $phone_err = $debut_err = $fin_err = $email_err = "";
+$nom = $phone = $email = "";
+$nom_err = $phone_err = $email_err = "";
 
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && !empty($_POST["id"])){
@@ -29,22 +29,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && !empty($_POST[
   }
 	
 	// Validate code rayon
-    $input_debut = trim($_POST["debut"]);
-    if(empty($input_debut)){
-        $debut_err = "Please enter an nom_auteur.";     
-    } else{
-        $debut = $input_debut;
-    }
-
-    // Validate code catalogue
-    $input_fin = trim($_POST["fin"]);
-    if(empty($input_fin)){
-        $fin_err = "Please enter an nom_auteur.";     
-    } else{
-        $fin = $input_fin;
-    }
-	
-	// Validate code rayon
     $input_email = trim($_POST["email"]);
     if(empty($input_email)){
         $email_err = "Please enter an nom_auteur.";     
@@ -54,24 +38,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && !empty($_POST[
     
     
     // Check input errors before inserting in database
-    if(empty($nom_err) && empty($phone_err) && empty($debut_err) && empty($fin_err) && empty($email_err)){
+    if(empty($nom_err) && empty($phone_err) && empty($email_err)){
 
-        $sql = "INSERT INTO pret VALUES (pret_seq.nextval, '$nom', '$phone', TO_DATE('$debut','YYYY-MM-DD'), TO_DATE('$fin','YYYY-MM-DD'), '$email')";
+        $sql = "INSERT INTO pret VALUES (pret_seq.nextval, '$nom', '$phone', NULL, NULL, '$email', 'reserver', '$id')";
         //$sql = "INSERT INTO pret VALUES (pret_seq.nextval, '$nom', '$phone', '$debut', '$fin', '$email')";
          
         //if($stmt = mysqli_prepare($link, $sql)){
         if($stmt = $link->prepare($sql)){
             if($stmt->execute()){
-
-                $sql = "UPDATE livre SET disponible=0 WHERE ID_LIVRE='$id'"; 
-
-                if($stmt = $link->prepare($sql)){
-                  if($stmt->execute()){
-                    // Records created successfully. Redirect to landing page
-                    header("location: ../index.php#livres");
-                    exit();
-                  }
-                }
+              // Records created successfully. Redirect to landing page
+              header("location: ../index.php#livres");
+              exit();
             } else{
                 echo "Something went wrong. Please try again later.";
             }
@@ -117,7 +94,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && !empty($_POST[
         <div class="col-md-12">
           <div class="form h-100">
 
-            <h3>Veuillez renseigner le formulaire pour prêter ce livre !</h3>
+            <h3>Veuillez renseigner le formulaire pour réserver ce livre !</h3>
             <br>
             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
 
@@ -135,19 +112,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && !empty($_POST[
               </div>
 
               <div class="row">
-                <div class="col-md-6 form-group mb-3 <?php echo (!empty($debut_err)) ? 'has-error' : ''; ?>">
-                  <label for="" class="col-form-label">Date début *</label>
-                  <input type="date" class="form-control" name="debut" id="debut"><?php echo $debut; ?></input>
-                  <span class="help-block"><?php echo $debut_err;?></span>
-                </div>
-                <div class="col-md-6 form-group mb-3 <?php echo (!empty($fin_err)) ? 'has-error' : ''; ?>">
-                  <label for="" class="col-form-label">Date fin *</label>
-                  <input type="date" class="form-control" name="fin" id="fin"><?php echo $fin; ?></input>
-                  <span class="help-block"><?php echo $fin_err;?></span>
-                </div>
-              </div>
-
-              <div class="row">
                 <div class="col-md-12 form-group mb-3 <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
                   <label for="" class="col-form-label">Email</label>
                   <input type="email" class="form-control" name="email" id="email" placeholder="domaine@exemple.com"><?php echo $email; ?></input>     
@@ -161,7 +125,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && !empty($_POST[
                   <div class="text-center">
                     <input type="hidden" name="id" value="<?php echo trim($_GET["id"]); ?>"/>
                     <a href="../index.php#livres" class="btn btn-danger rounded-0 py-2 px-4" style="margin-right:20px">Cancel</a>
-                    <input type="submit" value="Prêter le livre" class="btn rounded-0 py-2 px-4" style="background-color: #166ab5;color:white;margin-left:20px">
+                    <input type="submit" value="Réserver le livre" class="btn rounded-0 py-2 px-4" style="background-color: #166ab5;color:white;margin-left:20px">
                     <span class="submitting"></span>
                   </div>
                 </div>

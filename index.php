@@ -59,7 +59,7 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo me-auto"><a href="index.html">MundiaBiblio</a></h1>
+      <h1 class="logo me-auto"><a href="index.php">MundiaBiblio</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -197,14 +197,9 @@
                             echo "<td>" . $row['CODE_CATALOGUE'] . "</td>";
                             echo "<td>" . $row['CODE_RAYON'] . "</td>";
                             if($row['DISPONIBLE']==1)
-                              //echo "<td><a href='#' title='Update Record' data-toggle='tooltip'><span class='btn btn-success'>Disponible</span></a></td>";
-                              
-                              echo "<td><a href='preter_livre/index.php?id=". $row['ID_LIVRE'] ."' title='Update Record' data-toggle='tooltip'><span class='btn btn-success'>Prêter</span></a></td>";
-                              //echo "<td><a href='preter_livre/index.php'><span class='btn btn-success'>Disponible</span></a></td>";
-                              
-                              //echo "<td><a onclick='openForm({$row['ID_LIVRE']})' title='Update Record' data-toggle='tooltip'><span class='btn btn-success'>Disponible</span></a></td>";
+                              echo "<td><a href='action_livre/preter.php?id=". $row['ID_LIVRE'] ."' title='Update Record' data-toggle='tooltip'><span class='btn btn-success'>Prêter</span></a></td>";
                             else
-                              echo "<td><button class='btn btn-warning'>Réserver</button></td>";
+                            echo "<td><a href='action_livre/reserver.php?id=". $row['ID_LIVRE'] ."' title='Update Record' data-toggle='tooltip'><span class='btn btn-warning'>Réserver</span></a></td>";
                           echo "</tr>";  
 
                         }
