@@ -186,7 +186,7 @@
                           echo "<th>TITRE</th>";
                           echo "<th>CODE CATALOGUE</th>";
                           echo "<th>CODE RAYON</th>";
-                          echo "<th>STATUS</th>";
+                          echo "<th>ACTION</th>";
                         echo "</tr>";
                       echo "</thead>";
                       echo "<tbody>";
@@ -197,11 +197,14 @@
                             echo "<td>" . $row['CODE_CATALOGUE'] . "</td>";
                             echo "<td>" . $row['CODE_RAYON'] . "</td>";
                             if($row['DISPONIBLE']==1)
-                              echo "<td><a href='#' title='Update Record' data-toggle='tooltip'><span class='btn btn-success'>Disponible</span></a></td>";
-                              //echo "<td><a href='modifier.php?id=". $row['ID_LIVRE'] ."' title='Update Record' data-toggle='tooltip'><span class='btn btn-success'>Disponible</span></a></td>";
+                              //echo "<td><a href='#' title='Update Record' data-toggle='tooltip'><span class='btn btn-success'>Disponible</span></a></td>";
+                              
+                              echo "<td><a href='preter_livre/index.php?id=". $row['ID_LIVRE'] ."' title='Update Record' data-toggle='tooltip'><span class='btn btn-success'>Prêter</span></a></td>";
+                              //echo "<td><a href='preter_livre/index.php'><span class='btn btn-success'>Disponible</span></a></td>";
+                              
                               //echo "<td><a onclick='openForm({$row['ID_LIVRE']})' title='Update Record' data-toggle='tooltip'><span class='btn btn-success'>Disponible</span></a></td>";
                             else
-                              echo "<td><button class='btn btn-danger'>Prêté</button></td>";
+                              echo "<td><button class='btn btn-warning'>Réserver</button></td>";
                           echo "</tr>";  
 
                         }
