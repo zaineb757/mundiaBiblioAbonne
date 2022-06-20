@@ -124,7 +124,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && !empty($_POST[
                 <div class="col-md-12 form-group">
                   <div class="text-center">
                     <input type="hidden" name="id" value="<?php echo trim($_GET["id"]); ?>"/>
-                    <a href="../index.php#livres" class="btn btn-danger rounded-0 py-2 px-4" style="margin-right:20px">Cancel</a>
+                    <a href="../index.php#livres" class="btn btn-danger rounded-0 py-2 px-4" style="margin-right:20px">Annuler</a>
                     <input type="submit" value="Réserver le livre" class="btn rounded-0 py-2 px-4" style="background-color: #166ab5;color:white;margin-left:20px">
                     <span class="submitting"></span>
                   </div>
