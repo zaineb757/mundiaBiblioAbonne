@@ -54,7 +54,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && !empty($_POST[
     
     
     // Check input errors before inserting in database
-    if(empty($nom_err) && empty($phone_err) && empty($debut_err) && empty($fin_err) && empty($email_err)){
+    if(empty($nom_err) && empty($phone_err) && empty($debut_err) && empty($fin_err) && empty($email_err) && $fin>=$debut){
 
         $sql = "INSERT INTO pret VALUES (pret_seq.nextval, '$nom', '$phone', TO_DATE('$debut','YYYY-MM-DD'), TO_DATE('$fin','YYYY-MM-DD'), '$email', 'preter', '$id')";
         //$sql = "INSERT INTO pret VALUES (pret_seq.nextval, '$nom', '$phone', '$debut', '$fin', '$email')";
@@ -142,7 +142,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && !empty($_POST[
                 </div>
                 <div class="col-md-6 form-group mb-3 <?php echo (!empty($fin_err)) ? 'has-error' : ''; ?>">
                   <label for="" class="col-form-label">Date fin *</label>
-                  <input type="date" class="form-control" name="fin" id="fin"><?php echo $fin; ?></input>
+                  <input type="date" class="form-control" name="fin" id="fin" onchange="TDate()"><?php echo $fin; ?></input>
                   <span class="help-block"><?php echo $fin_err;?></span>
                 </div>
               </div>
@@ -185,6 +185,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && !empty($_POST[
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.validate.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/date.js"></script>
 
   </body>
 </html>
