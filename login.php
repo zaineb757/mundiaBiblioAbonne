@@ -17,7 +17,7 @@ WHERE username_abonne=:username AND password_abonne=:password";
         if ($username != "") {
             $_SESSION['username'] = $username;
             echo "You've successfully logged in. ";
-            header("Location:Menu.html");
+            header("Location:inner-page.html");
         }
     } else {
        // printf("chi haja mahiyach");
