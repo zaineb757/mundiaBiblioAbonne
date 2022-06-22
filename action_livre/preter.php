@@ -1,82 +1,72 @@
 <?php
-// Include config file
-require_once "../config_anas.php";
- 
-// Define variables and initialize with empty values
-$nom = $phone = $debut = $fin = $email = "";
-$nom_err = $phone_err = $debut_err = $fin_err = $email_err = "";
 
-// Processing form data when form is submitted
-if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && !empty($_POST["id"])){
-
-  // Get hidden input value
-  $id = $_POST["id"];
-	
-	// Validate titre du livre
-  $input_nom = trim($_POST["nom"]);
-  if(empty($input_nom)){
-      $nom_err = "Please enter a name.";
-  } else{
-      $nom = $input_nom;
-  }
+  // Include config file
+  require_once "../config_anas.php";
   
-  // Validate code catalogue
-  $input_phone = trim($_POST["phone"]);
-  if(empty($input_phone)){
-      $phone_err = "Please enter an nom_auteur.";     
-  } else{
-      $phone = $input_phone;
-  }
-	
-	// Validate code rayon
-    $input_debut = trim($_POST["debut"]);
-    if(empty($input_debut)){
-        $debut_err = "Please enter an nom_auteur.";     
-    } else{
-        $debut = $input_debut;
+  // Define variables and initialize with empty values
+  $nom = $phone = $debut = $fin = $email = "";
+
+  // Processing form data when form is submitted
+  if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && !empty($_POST["id"])){
+
+    // Get hidden input value
+    $id = $_POST["id"];
+  
+    $nom = trim($_POST["nom"]);
+
+    $phone = trim($_POST["phone"]);
+
+    $debut = trim($_POST["debut"]);
+
+    $fin = trim($_POST["fin"]);
+
+    $email = trim($_POST["email"]);
+
+    if($fin<$debut){
+      header("location: ./erreur.php");
+      exit();
     }
 
-    // Validate code catalogue
-    $input_fin = trim($_POST["fin"]);
-    if(empty($input_fin)){
-        $fin_err = "Please enter an nom_auteur.";     
-    } else{
-        $fin = $input_fin;
+    else if($fin>date('Y-m-d', strtotime($debut. ' + 14 days'))){
+      header("location: ./erreur.php");
+      exit();
     }
-	
-	// Validate code rayon
-    $input_email = trim($_POST["email"]);
-    if(empty($input_email)){
-        $email_err = "Please enter an nom_auteur.";     
-    } else{
-        $email = $input_email;
-    }
-    
-    // Check input errors before inserting in database
-    if(empty($nom_err) && empty($phone_err) && empty($debut_err) && empty($fin_err) && empty($email_err) && $fin>=$debut && $fin<=date('Y-m-d', strtotime($debut. ' + 14 days'))){
+
+    else{
 
       $sql = "INSERT INTO pret VALUES (pret_seq.nextval, '$nom', '$phone', TO_DATE('$debut','YYYY-MM-DD'), TO_DATE('$fin','YYYY-MM-DD'), '$email', 'preter', '$id')";
         
       if($stmt = $link->prepare($sql)){
-          if($stmt->execute()){
 
-              $sql = "UPDATE livre SET stock=stock-1 WHERE ID_LIVRE='$id'"; 
+        if($stmt->execute()){
 
-              if($stmt = $link->prepare($sql)){
-                if($stmt->execute()){
-                  // Records created successfully. Redirect to landing page
-                  header("location: ../index.php#livres");
-                  exit();
-                }
-              }
-          } else{
-              echo "Something went wrong. Please try again later.";
+          $sql = "UPDATE livre SET stock=stock-1 WHERE ID_LIVRE='$id'"; 
+
+          if($stmt = $link->prepare($sql)){
+
+            if($stmt->execute()){
+
+              // Records created successfully. Redirect to landing page
+              header("location: ../index.php#livres");
+              exit();
+
+            }
+
           }
+
+        }else{
+          header("location: ./erreur.php");
+          exit();
+        }
+
       }
-      
+        
       $stmt->closeCursor(); //PDO close
+
     }
-}
+
+  }
+
 ?>
 
 
@@ -114,36 +104,31 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && !empty($_POST[
             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
 
               <div class="row">
-                <div class="col-md-6 form-group mb-3 <?php echo (!empty($nom_err)) ? 'has-error' : ''; ?>">
+                <div class="col-md-6 form-group mb-3">
                   <label for="" class="col-form-label">Nom *</label>
-                  <input type="text" class="form-control" name="nom" id="nom" placeholder="Saisir votre nom..."><?php echo $nom; ?></input>
-                  <span class="help-block"><?php echo $nom_err;?></span>
+                  <input type="text" class="form-control" name="nom" id="nom" placeholder="Saisir votre nom..." required><?php echo $nom; ?></input>
                 </div>
-                <div class="col-md-6 form-group mb-3 <?php echo (!empty($phone_err)) ? 'has-error' : ''; ?>">
+                <div class="col-md-6 form-group mb-3">
                   <label for="" class="col-form-label">Numero de téléphone *</label>
-                  <input type="number" class="form-control" name="phone" id="phone"  placeholder="Saisir votre numéro de téléphone..."><?php echo $phone; ?></input>
-                  <span class="help-block"><?php echo $phone_err;?></span>
+                  <input type="number" class="form-control" name="phone" id="phone" placeholder="Saisir votre numéro de téléphone..." required><?php echo $phone; ?></input>
                 </div>
               </div>
 
               <div class="row">
-                <div class="col-md-6 form-group mb-3 <?php echo (!empty($debut_err)) ? 'has-error' : ''; ?>">
+                <div class="col-md-6 form-group mb-3">
                   <label for="" class="col-form-label">Date début *</label>
-                  <input type="date" class="form-control" name="debut" id="debut"><?php echo $debut; ?></input>
-                  <span class="help-block"><?php echo $debut_err;?></span>
+                  <input type="date" class="form-control" name="debut" id="debut" required><?php echo $debut; ?></input>
                 </div>
-                <div class="col-md-6 form-group mb-3 <?php echo (!empty($fin_err)) ? 'has-error' : ''; ?>">
+                <div class="col-md-6 form-group mb-3">
                   <label for="" class="col-form-label">Date fin *</label>
-                  <input type="date" class="form-control" name="fin" id="fin" onchange="checkDates()"><?php echo $fin; ?></input>
-                  <span class="help-block"><?php echo $fin_err;?></span>
+                  <input type="date" class="form-control" name="fin" id="fin" onchange="checkDates()" required><?php echo $fin; ?></input>
                 </div>
               </div>
 
               <div class="row">
-                <div class="col-md-12 form-group mb-3 <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
+                <div class="col-md-12 form-group mb-3">
                   <label for="" class="col-form-label">Email</label>
-                  <input type="email" class="form-control" name="email" id="email" placeholder="domaine@exemple.com"><?php echo $email; ?></input>     
-                  <span class="help-block"><?php echo $email_err;?></span>             
+                  <input type="email" class="form-control" name="email" id="email" placeholder="domaine@exemple.com" required><?php echo $email; ?></input>                 
                 </div>
               </div>
               <br>
@@ -154,17 +139,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && !empty($_POST[
                     <input type="hidden" name="id" value="<?php echo trim($_GET["id"]); ?>"/>
                     <a href="../index.php#livres" class="btn btn-danger rounded-0 py-2 px-4" style="margin-right:20px">Annuler</a>
                     <input type="submit" value="Prêter le livre" class="btn rounded-0 py-2 px-4" style="background-color: #5cb85c;color:white;margin-left:20px">
-                    <span class="submitting"></span>
                   </div>
                 </div>
               </div>
 
             </form>
-
-            <div id="form-message-warning mt-4"></div> 
-            <div id="form-message-success">
-              Vous venez de prêter ce livre, merci !
-            </div>
           </div>
         </div>
       </div>
