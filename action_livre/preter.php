@@ -60,7 +60,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && !empty($_POST[
       if($stmt = $link->prepare($sql)){
           if($stmt->execute()){
 
-              $sql = "UPDATE livre SET exemplaires=exemplaires-1 WHERE ID_LIVRE='$id'"; 
+              $sql = "UPDATE livre SET stock=stock-1 WHERE ID_LIVRE='$id'"; 
 
               if($stmt = $link->prepare($sql)){
                 if($stmt->execute()){
@@ -109,7 +109,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && !empty($_POST[
         <div class="col-md-12">
           <div class="form h-100">
 
-            <h3>Veuillez renseigner le formulaire pour prêter ce livre !</h3>
+            <h3 style="color:#166ab5;">Veuillez renseigner le formulaire pour prêter ce livre !</h3>
             <br>
             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
 
@@ -153,7 +153,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && !empty($_POST[
                   <div class="text-center">
                     <input type="hidden" name="id" value="<?php echo trim($_GET["id"]); ?>"/>
                     <a href="../index.php#livres" class="btn btn-danger rounded-0 py-2 px-4" style="margin-right:20px">Annuler</a>
-                    <input type="submit" value="Prêter le livre" class="btn rounded-0 py-2 px-4" style="background-color: #166ab5;color:white;margin-left:20px">
+                    <input type="submit" value="Prêter le livre" class="btn rounded-0 py-2 px-4" style="background-color: #5cb85c;color:white;margin-left:20px">
                     <span class="submitting"></span>
                   </div>
                 </div>

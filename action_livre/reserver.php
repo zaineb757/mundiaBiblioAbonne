@@ -94,7 +94,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && !empty($_POST[
         <div class="col-md-12">
           <div class="form h-100">
 
-            <h3>Veuillez renseigner le formulaire pour réserver ce livre !</h3>
+            <h3 style="color:#166ab5;">Veuillez renseigner le formulaire pour réserver ce livre !</h3>
             <br>
             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
 
@@ -125,7 +125,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && !empty($_POST[
                   <div class="text-center">
                     <input type="hidden" name="id" value="<?php echo trim($_GET["id"]); ?>"/>
                     <a href="../index.php#livres" class="btn btn-danger rounded-0 py-2 px-4" style="margin-right:20px">Annuler</a>
-                    <input type="submit" value="Réserver le livre" class="btn rounded-0 py-2 px-4" style="background-color: #166ab5;color:white;margin-left:20px">
+                    <input type="submit" value="Réserver le livre" class="btn rounded-0 py-2 px-4" style="background-color: #f0ad4e;color:white;margin-left:20px">
                     <span class="submitting"></span>
                   </div>
                 </div>

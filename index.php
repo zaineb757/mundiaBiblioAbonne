@@ -201,11 +201,17 @@
                             echo "<td>" . $row['AUTEUR'] . "</td>";
                             echo "<td>" . $row['EDITEUR'] . "</td>";
                             echo "<td>" . $row['GENRE'] . "</td>";
-                            echo "<td>" . $row['EXEMPLAIRES'] . "</td>";
-                            if($row['EXEMPLAIRES']>0)
+
+                            if($row['STOCK']>0)
+                              echo "<td>" . $row['STOCK'] . "</td>";
+                            else
+                              echo "<td style='color:red;'>" . $row['STOCK'] . "</td>";
+
+                            if($row['STOCK']>0)
                               echo "<td><a href='action_livre/preter.php?id=". $row['ID_LIVRE'] ."' title='Update Record' data-toggle='tooltip'><span class='btn btn-success'>Prêter</span></a></td>";
                             else
                               echo "<td><a href='action_livre/reserver.php?id=". $row['ID_LIVRE'] ."' title='Update Record' data-toggle='tooltip'><span class='btn btn-warning'>Réserver</span></a></td>";
+                          
                           echo "</tr>";  
 
                         }
