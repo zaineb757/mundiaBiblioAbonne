@@ -179,13 +179,15 @@
 
                 if ($result = $link->query($sql)) {						
                   if($result){
-                    echo "<table class='table table-striped table-bordered table-sm' cellspacing='0' width='100%'>";
+                    echo "<table id='dtBasicExample' class='table table-striped table-bordered table-sm' cellspacing='0' width='100%'>";
                       echo "<thead>";
                         echo "<tr>";
-                          echo "<th>ID</th>";
                           echo "<th>TITRE</th>";
                           echo "<th>CODE CATALOGUE</th>";
                           echo "<th>CODE RAYON</th>";
+                          echo "<th>AUTEUR</th>";
+                          echo "<th>EDITEUR</th>";
+                          echo "<th>GENRE</th>";
                           echo "<th>STOCK</th>";
                           echo "<th>ACTION</th>";
                         echo "</tr>";
@@ -193,15 +195,17 @@
                       echo "<tbody>";
                         foreach ($link->query($sql) as $row) {
                           echo "<tr>";
-                            echo "<td scope='row'>" . $row['ID_LIVRE'] . "</td>";
-                            echo "<td>" . $row['TITRE_LIVRE'] . "</td>";
+                            echo "<td scope='row'>" . $row['TITRE_LIVRE'] . "</td>";
                             echo "<td>" . $row['CODE_CATALOGUE'] . "</td>";
                             echo "<td>" . $row['CODE_RAYON'] . "</td>";
+                            echo "<td>" . $row['AUTEUR'] . "</td>";
+                            echo "<td>" . $row['EDITEUR'] . "</td>";
+                            echo "<td>" . $row['GENRE'] . "</td>";
                             echo "<td>" . $row['EXEMPLAIRES'] . "</td>";
                             if($row['EXEMPLAIRES']>0)
                               echo "<td><a href='action_livre/preter.php?id=". $row['ID_LIVRE'] ."' title='Update Record' data-toggle='tooltip'><span class='btn btn-success'>Prêter</span></a></td>";
                             else
-                            echo "<td><a href='action_livre/reserver.php?id=". $row['ID_LIVRE'] ."' title='Update Record' data-toggle='tooltip'><span class='btn btn-warning'>Réserver</span></a></td>";
+                              echo "<td><a href='action_livre/reserver.php?id=". $row['ID_LIVRE'] ."' title='Update Record' data-toggle='tooltip'><span class='btn btn-warning'>Réserver</span></a></td>";
                           echo "</tr>";  
 
                         }
