@@ -60,7 +60,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && !empty($_POST[
       if($stmt = $link->prepare($sql)){
           if($stmt->execute()){
 
-              $sql = "UPDATE livre SET disponible=0 WHERE ID_LIVRE='$id'"; 
+              $sql = "UPDATE livre SET exemplaires=exemplaires-1 WHERE ID_LIVRE='$id'"; 
 
               if($stmt = $link->prepare($sql)){
                 if($stmt->execute()){

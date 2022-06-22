@@ -186,6 +186,7 @@
                           echo "<th>TITRE</th>";
                           echo "<th>CODE CATALOGUE</th>";
                           echo "<th>CODE RAYON</th>";
+                          echo "<th>STOCK</th>";
                           echo "<th>ACTION</th>";
                         echo "</tr>";
                       echo "</thead>";
@@ -196,7 +197,8 @@
                             echo "<td>" . $row['TITRE_LIVRE'] . "</td>";
                             echo "<td>" . $row['CODE_CATALOGUE'] . "</td>";
                             echo "<td>" . $row['CODE_RAYON'] . "</td>";
-                            if($row['DISPONIBLE']==1)
+                            echo "<td>" . $row['EXEMPLAIRES'] . "</td>";
+                            if($row['EXEMPLAIRES']>0)
                               echo "<td><a href='action_livre/preter.php?id=". $row['ID_LIVRE'] ."' title='Update Record' data-toggle='tooltip'><span class='btn btn-success'>Prêter</span></a></td>";
                             else
                             echo "<td><a href='action_livre/reserver.php?id=". $row['ID_LIVRE'] ."' title='Update Record' data-toggle='tooltip'><span class='btn btn-warning'>Réserver</span></a></td>";
