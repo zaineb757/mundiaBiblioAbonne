@@ -52,38 +52,30 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && !empty($_POST[
         $email = $input_email;
     }
     
-    
     // Check input errors before inserting in database
-    if(empty($nom_err) && empty($phone_err) && empty($debut_err) && empty($fin_err) && empty($email_err) && $fin>=$debut){
+    if(empty($nom_err) && empty($phone_err) && empty($debut_err) && empty($fin_err) && empty($email_err) && $fin>=$debut && $fin<=date('Y-m-d', strtotime($debut. ' + 14 days'))){
 
-        $sql = "INSERT INTO pret VALUES (pret_seq.nextval, '$nom', '$phone', TO_DATE('$debut','YYYY-MM-DD'), TO_DATE('$fin','YYYY-MM-DD'), '$email', 'preter', '$id')";
-        //$sql = "INSERT INTO pret VALUES (pret_seq.nextval, '$nom', '$phone', '$debut', '$fin', '$email')";
-         
-        //if($stmt = mysqli_prepare($link, $sql)){
-        if($stmt = $link->prepare($sql)){
-            if($stmt->execute()){
+      $sql = "INSERT INTO pret VALUES (pret_seq.nextval, '$nom', '$phone', TO_DATE('$debut','YYYY-MM-DD'), TO_DATE('$fin','YYYY-MM-DD'), '$email', 'preter', '$id')";
+        
+      if($stmt = $link->prepare($sql)){
+          if($stmt->execute()){
 
-                $sql = "UPDATE livre SET disponible=0 WHERE ID_LIVRE='$id'"; 
+              $sql = "UPDATE livre SET disponible=0 WHERE ID_LIVRE='$id'"; 
 
-                if($stmt = $link->prepare($sql)){
-                  if($stmt->execute()){
-                    // Records created successfully. Redirect to landing page
-                    header("location: ../index.php#livres");
-                    exit();
-                  }
+              if($stmt = $link->prepare($sql)){
+                if($stmt->execute()){
+                  // Records created successfully. Redirect to landing page
+                  header("location: ../index.php#livres");
+                  exit();
                 }
-            } else{
-                echo "Something went wrong. Please try again later.";
-            }
-        }
-         
-        // Close statement
-        //mysqli_stmt_close($stmt);
-        $stmt->closeCursor(); //PDO close
+              }
+          } else{
+              echo "Something went wrong. Please try again later.";
+          }
+      }
+      
+      $stmt->closeCursor(); //PDO close
     }
-    
-    // Close connection
-    //mysqli_close($link);
 }
 ?>
 
@@ -142,7 +134,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && !empty($_POST[
                 </div>
                 <div class="col-md-6 form-group mb-3 <?php echo (!empty($fin_err)) ? 'has-error' : ''; ?>">
                   <label for="" class="col-form-label">Date fin *</label>
-                  <input type="date" class="form-control" name="fin" id="fin" onchange="TDate()"><?php echo $fin; ?></input>
+                  <input type="date" class="form-control" name="fin" id="fin" onchange="checkDates()"><?php echo $fin; ?></input>
                   <span class="help-block"><?php echo $fin_err;?></span>
                 </div>
               </div>
