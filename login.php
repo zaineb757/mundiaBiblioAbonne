@@ -17,7 +17,7 @@ WHERE username_abonne=:username AND password_abonne=:password";
         if ($username != "") {
             $_SESSION['username'] = $username;
             echo "You've successfully logged in. ";
-            header("Location:inner-page.html");
+            header("Location:index.php");
         }
     } else {
        // printf("chi haja mahiyach");
@@ -35,7 +35,7 @@ WHERE username_abonne=:username AND password_abonne=:password";
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>MUNDIAPOLIS BIBLIO</title>
+  <title>Mundiathèque</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -79,8 +79,8 @@ WHERE username_abonne=:username AND password_abonne=:password";
 
               <div class="d-flex justify-content-center py-4">
                 <a href="index.html" class="logo d-flex align-items-center w-auto">
-                  <img src="assets/img/logo.png" alt="">
-                  <span class="d-none d-lg-block">NiceAdmin</span>
+                  <img src="assets/img/favicon.png" alt="">
+                  <span class="d-none d-lg-block">Mundiathèque</span>
                 </a>
               </div><!-- End Logo -->
 
@@ -93,8 +93,8 @@ WHERE username_abonne=:username AND password_abonne=:password";
                     <p class="text-center small">Enter your username & password to login</p>
                   </div>
 
-                  
-				  <form class="row g-3 needs-validation" novalidate method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
+
+                  <form class="row g-3 needs-validation" novalidate method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Username</label>
@@ -118,11 +118,11 @@ WHERE username_abonne=:username AND password_abonne=:password";
                       </div>
                     </div>
                     <div class="col-12">
-					
+
                       <button class="btn btn-primary w-100" type="submit" value="Login">Login</button>
-					  <a href="logout.php" class="btn btn-default">Cancel</a>
+                      <a href="logout.php" class="btn btn-default">Cancel</a>
                     </div>
-                 
+
                   </form>
 
                 </div>
@@ -133,7 +133,7 @@ WHERE username_abonne=:username AND password_abonne=:password";
                 <!-- You can delete the links only if you purchased the pro version. -->
                 <!-- Licensing information: https://bootstrapmade.com/license/ -->
                 <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-                Designed by <a href="https://bootstrapmade.com/">FAZAS</a>
+                Designed by <a href="https://bootstrapmade.com/">FAZAN</a>
               </div>
 
             </div>
